@@ -1,5 +1,5 @@
-const loginFlag = 0
+const user = null
 
 export default {
-    loginFlag:0
+    user
 }

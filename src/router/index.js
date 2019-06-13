@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import store from '@/store/global'
 import Router from 'vue-router'
 import Login from '@/pages/login/login'
+import Register from '@/pages/register/register'
 import Buy from '@/pages/buy/buy'
 import Sell from '@/pages/sell/sell'
 import Msg from '@/pages/msg/msg'
@@ -16,6 +18,11 @@ const router =  new Router({
       path: '/',
       name: 'login',
       component: Login
+    }, 
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     }, 
     {
       path:'/home',
@@ -53,6 +60,20 @@ const router =  new Router({
       ]
     },
   ]
+})
+
+//登录校验
+router.beforeEach((to, from, next) => {
+  if(store.user != null) {
+    next();
+  } else {
+    if(to.name == "login" || to.name == "register") {
+      next();
+      return;
+    }
+    next({ path: '/' });
+  }
+  next();
 })
 
 export default router

@@ -3,9 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
 import global from './store/global';
+import { Row, Col,NavBar,Cell, CellGroup } from 'vant';
+import './common/css/style.css';
 
+Vue.use(Row).use(Col).use(NavBar).use(Cell).use(CellGroup);
 Vue.config.productionTip = false
 
 Vue.prototype.GLOBAL = global

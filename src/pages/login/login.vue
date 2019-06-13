@@ -24,11 +24,23 @@
       <van-button type="primary" v-if="submitFlag==0" round size="large" @click="submit">登录</van-button>
       <van-button type="primary" v-else round disabled size="large">登录</van-button>
     </div>
+    <!-- <van-row type="flex" justify="end">
+      <van-col span="10">
+        <span>忘记密码</span>
+      </van-col>
+    </van-row> -->
+    <van-row type="flex" justify="center">
+      <van-col span="12">
+        <span class="text1">还没有账号？</span>
+        <span class="text2" @click="register">立即注册</span>
+      </van-col>
+    </van-row>
   </div>
 </template>
 
 <script>
-import { Button, Field,Toast,Cell, CellGroup } from "vant";
+import { Button, Field, Toast } from "vant";
+import md5 from 'js-md5';
 import user from "@/api/user";
 export default {
   name: "login",
@@ -36,8 +48,6 @@ export default {
     [Button.name]: Button,
     [Field.name]: Field,
     [Toast.name]: Toast,
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup,
   },
   data() {
     return {
@@ -47,6 +57,9 @@ export default {
     };
   },
   methods: {
+    register() {
+       this.$router.push({path: "/register"});
+    },
     submit() {
       if(this.username==''){
         Toast("请输入用户名");
@@ -58,16 +71,17 @@ export default {
       }
       const data = {
         username: this.username,
-        password: this.password,
+        password: md5(this.password),
       };
       this.submitFlag = 1;
       user.Login(data).then(res => {
-        if( res==null ) {
+        if( res.code == '1' ) {
           this.password = "";
           Toast.fail('账号或密码错误,请重新登录');
           this.submitFlag = 0;
         }else {       
           Toast.success('登录成功');
+          this.GLOBAL.user = res.user;
           setTimeout(() => {
             this.$router.push({path: "/home"});
           },1000)     
@@ -88,10 +102,16 @@ export default {
     }   
   }
   .login-input {
-    padding: 40px 30px 0px 30px;
+    padding: 40px 20px 0px 20px;
   }
   .login-submit {
-    padding: 30px;
+    padding: 20px 20px 20px 30px;
+  }
+  .text1 {
+    font-size: 15px;
+  }
+  .text2 {
+    font-size: 17px;
   }
 }
 </style>
