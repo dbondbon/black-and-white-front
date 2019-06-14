@@ -5,6 +5,7 @@ import Login from '@/pages/login/login'
 import Register from '@/pages/register/register'
 import Buy from '@/pages/buy/buy'
 import Sell from '@/pages/sell/sell'
+import SellingDetails from '@/pages/sellingDetails/sellingDetails'
 import Msg from '@/pages/msg/msg'
 import Cart from '@/pages/cart/cart'
 import Mine from '@/pages/mine/mine'
@@ -36,12 +37,7 @@ const router =  new Router({
           path:'buy',
           name:'buy',
           component: Buy,
-        },
-        {
-          path:'sell',
-          name:'sell',
-          component: Sell,
-        },
+        },     
         {
           path:'msg',
           name:'msg',
@@ -58,6 +54,16 @@ const router =  new Router({
           component: Mine,
         },
       ]
+    },
+    {
+      path:'/sell',
+      name:'sell',
+      component: Sell,
+    },
+    {
+      path:'/sellingDetails',
+      name:'sellingDetails',
+      component: SellingDetails,
     },
   ]
 })

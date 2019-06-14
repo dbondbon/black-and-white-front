@@ -24,4 +24,12 @@ export default {
             url: url,
         })
     },
+    GetNickname(params) {
+        let url = '/user/getNickname'
+        return axios({
+            method: 'post',
+            url: url,
+            data: params,
+        })
+    },
 }
