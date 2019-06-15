@@ -9,8 +9,8 @@ export default {
             data: params,
         })
     },
-    Update(params) {
-        let url = '/cart/update'
+    List(params) {
+        let url = '/cart/list'
         return axios({
             method: 'post',
             url: url,

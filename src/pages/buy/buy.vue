@@ -68,7 +68,8 @@ export default {
       console.log("取消");
     },
     sellingDetails(goodsItem) {
-      this.$router.push({ path: "/sellingDetails", query: {goods: goodsItem} });
+      this.GLOBAL.goods = goodsItem;
+      this.$router.push({ path: "/sellingDetails" });
     }
   }
 };

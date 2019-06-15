@@ -44,11 +44,6 @@ const router =  new Router({
           component: Msg,
         },
         {
-          path:'cart',
-          name:'cart',
-          component: Cart,
-        },
-        {
           path:'mine',
           name:'mine',
           component: Mine,
@@ -64,6 +59,11 @@ const router =  new Router({
       path:'/sellingDetails',
       name:'sellingDetails',
       component: SellingDetails,
+    },
+    {
+      path:'/cart',
+      name:'cart',
+      component: Cart,
     },
   ]
 })

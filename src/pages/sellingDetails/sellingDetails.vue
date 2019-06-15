@@ -1,6 +1,6 @@
 <template>
   <div class="sellingDetails">
-    <van-nav-bar title="出售详情" left-text="返回" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar title="出售详情" left-text="返回" left-arrow @click-left="back"/>
 
     <van-cell-group class="headInput">
       <!-- <van-field v-model="goods.name" label="添加封面" placeholder="点击此区域上传封面" disabled /> -->
@@ -21,7 +21,8 @@
 
     <van-goods-action>
       <van-goods-action-mini-btn icon="chat-o" text="联系卖家" @click="sendMsg"/>
-      <van-goods-action-mini-btn icon="cart-o" text="购物车" @click="viewCart"/>
+      <van-goods-action-mini-btn v-if="this.count==0" to="/cart" icon="cart-o" text="购物车" @click="viewCart"/>
+      <van-goods-action-mini-btn v-else :info=this.count to="/cart" icon="cart-o" text="购物车" @click="viewCart"/>
       <van-goods-action-big-btn text="加入购物车" @click="addToCart"/>
       <van-goods-action-big-btn primary text="立即购买" @click="buyNow"/>
     </van-goods-action>
@@ -29,36 +30,49 @@
 </template>
 
 <script>
-import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn,Field } from "vant";
+import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Field, Toast } from "vant";
 import user from "@/api/user";
+import cart from "@/api/cart";
 export default {
   name: "sellingDetails",
   components: {
     [GoodsAction.name]: GoodsAction,
     [GoodsActionBigBtn.name]: GoodsActionBigBtn,
     [GoodsActionMiniBtn.name]: GoodsActionMiniBtn,
-    [Field.name]: Field
+    [Field.name]: Field,
+    [Toast.name]: Toast
   },
   data() {
     return {
         sellerNickname:'aaa',
-        goods:{}
+        goods:{},
+        count:0
     };
   },
   mounted() {
       this.init();
+      this.getCartCount();
   },
   methods: {
     init() {
-        this.goods = this.$route.query.goods;
-        const data = {
-         userId:this.$route.query.goods.userId
+        this.goods = this.GLOBAL.goods;
+        let data = {
+         userId:this.GLOBAL.goods.userId
         };
         user.GetNickname(data).then(res => {
             this.sellerNickname = res.nickname;
+            this.GLOBAL.sellerNickname = this.sellerNickname;
         });
     },
-    onClickLeft() {
+    getCartCount() {
+      let data = {
+        userId:this.GLOBAL.user.userId,
+      }
+      cart.List(data).then(res => {
+        this.count = res.cartList.length;
+      });
+    },
+    back() {
       this.$router.push({ path: "/home/buy" });
     },
     sendMsg() {
@@ -68,7 +82,14 @@ export default {
       console.log("查看购物车");
     },
     addToCart() {
-      console.log("添加购物车");
+      let data = {
+         userId:this.GLOBAL.user.userId,
+         goodsId:this.GLOBAL.goods.goodsId
+      };
+      cart.Add(data).then(res => {
+        Toast('恭喜您，书籍已添加至购物车');
+        this.getCartCount();
+      });
     },
     buyNow() {
       console.log("立即购买");
