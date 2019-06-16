@@ -69,6 +69,7 @@ export default {
     },
     sellingDetails(goodsItem) {
       this.GLOBAL.goods = goodsItem;
+      this.GLOBAL.previousStatus = 0;
       this.$router.push({ path: "/sellingDetails" });
     }
   }
@@ -77,9 +78,7 @@ export default {
 
 <style lang="less" scoped>
 .buy {
-  .bookPrice {
-    color: green;
-  }
+  
 }
 </style>
 

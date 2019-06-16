@@ -25,4 +25,12 @@ export default {
             data: params,
         })
     },
+    Price(params) {
+        let url = '/cart/price'
+        return axios({
+            method: 'post',
+            url: url,
+            data: params,
+        })
+    },
 }

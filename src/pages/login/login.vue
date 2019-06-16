@@ -9,7 +9,7 @@
           v-model="username"
           clearable
           left-icon="manager"
-          placeholder="请输入用户名"
+          placeholder="请输入账号"
         />
         <van-field
           v-model="password"

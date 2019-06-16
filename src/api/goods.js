@@ -17,4 +17,12 @@ export default {
             data: params,
         })
     },
+    FindCartGoods(params) {
+        let url = '/goods/findCartGoods'
+        return axios({
+            method: 'post',
+            url: url,
+            data: params,
+        })
+    },
 }

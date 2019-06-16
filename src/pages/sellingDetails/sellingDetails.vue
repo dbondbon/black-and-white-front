@@ -21,8 +21,8 @@
 
     <van-goods-action>
       <van-goods-action-mini-btn icon="chat-o" text="联系卖家" @click="sendMsg"/>
-      <van-goods-action-mini-btn v-if="this.count==0" to="/cart" icon="cart-o" text="购物车" @click="viewCart"/>
-      <van-goods-action-mini-btn v-else :info=this.count to="/cart" icon="cart-o" text="购物车" @click="viewCart"/>
+      <van-goods-action-mini-btn v-if="this.count==0" to="/cart" icon="cart-o" text="购物车"/>
+      <van-goods-action-mini-btn v-else :info=this.count to="/cart" icon="cart-o" text="购物车"/>
       <van-goods-action-big-btn text="加入购物车" @click="addToCart"/>
       <van-goods-action-big-btn primary text="立即购买" @click="buyNow"/>
     </van-goods-action>
@@ -44,9 +44,9 @@ export default {
   },
   data() {
     return {
-        sellerNickname:'aaa',
+        sellerNickname:'',
         goods:{},
-        count:0
+        count:0,
     };
   },
   mounted() {
@@ -55,14 +55,25 @@ export default {
   },
   methods: {
     init() {
-        this.goods = this.GLOBAL.goods;
-        let data = {
-         userId:this.GLOBAL.goods.userId
-        };
-        user.GetNickname(data).then(res => {
-            this.sellerNickname = res.nickname;
-            this.GLOBAL.sellerNickname = this.sellerNickname;
-        });
+        if(this.GLOBAL.previousStatus == 0) {
+          this.goods = this.GLOBAL.goods;
+          let data = {
+          userId:this.GLOBAL.goods.userId
+          };
+          user.GetNickname(data).then(res => {
+              this.sellerNickname = res.nickname;
+              this.GLOBAL.sellerNickname = this.sellerNickname;
+          });
+        } else {
+          this.goods = this.GLOBAL.cartGoods;
+          let data = {
+          userId:this.GLOBAL.cartGoods.userId
+          };
+          user.GetNickname(data).then(res => {
+              this.sellerNickname = res.nickname;
+              this.GLOBAL.sellerNickname = this.sellerNickname;
+          });
+        }  
     },
     getCartCount() {
       let data = {
@@ -73,13 +84,14 @@ export default {
       });
     },
     back() {
-      this.$router.push({ path: "/home/buy" });
+      if(this.GLOBAL.previousStatus == 0) {
+        this.$router.push({ path: "/home/buy" });
+      } else {
+        this.$router.push({ path: "/cart" });
+      }
     },
     sendMsg() {
       console.log("联系卖家");
-    },
-    viewCart() {
-      console.log("查看购物车");
     },
     addToCart() {
       let data = {
