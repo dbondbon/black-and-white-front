@@ -10,6 +10,9 @@ import Msg from '@/pages/msg/msg'
 import Cart from '@/pages/cart/cart'
 import Mine from '@/pages/mine/mine'
 import Home from '@/pages/home/home'
+import Setting from '@/pages/setting/setting'
+import BuyOrder from '@/pages/buyOrder/buyOrder'
+import SellOrder from '@/pages/sellOrder/sellOrder'
 
 Vue.use(Router)
 
@@ -64,6 +67,21 @@ const router =  new Router({
       path:'/cart',
       name:'cart',
       component: Cart,
+    },
+    {
+      path:'/setting',
+      name:'setting',
+      component: Setting,
+    },
+    {
+      path:'/buyOrder',
+      name:'buyOrder',
+      component: BuyOrder,
+    },
+    {
+      path:'/sellOrder',
+      name:'sellOrder',
+      component: SellOrder,
     },
   ]
 })

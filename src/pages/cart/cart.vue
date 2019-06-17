@@ -3,7 +3,7 @@
     <van-nav-bar title="购物车" left-text="返回" left-arrow @click-left="back"/>
 
     <van-list :finished="finished">
-      <van-checkbox-group v-model="result" :change="changeResult(result)">
+      <van-checkbox-group v-model="resultList" :change="changeResult(resultList)">
         <van-checkbox
           v-for="goodsItem in goodsList"
           :key="goodsItem.goodsId"
@@ -44,9 +44,10 @@
 </template>
 
 <script>
-import { SubmitBar, Card, Button, Checkbox, CheckboxGroup, List, Icon, Dialog  } from "vant";
+import { SubmitBar, Card, Button, Checkbox, CheckboxGroup, List, Icon, Dialog, Toast  } from "vant";
 import cart from "@/api/cart";
 import goods from "@/api/goods";
+import order from "@/api/order";
 export default {
   name: "cart",
   components: {
@@ -57,13 +58,14 @@ export default {
    [CheckboxGroup.name]: CheckboxGroup,
    [List.name]: List,
    [Icon.name]: Icon,
-   [Dialog.name]: Dialog
+   [Dialog.name]: Dialog,
+   [Toast.name]: Toast
   },
   data() {
     return {
       goodsList:[],
       totalPrice:0,
-      result: [],
+      resultList: [],
       finished: true,
     };
   },
@@ -80,28 +82,32 @@ export default {
       });
     },
     back() {    
+      if(this.GLOBAL.isMine == 1) {
+        this.GLOBAL.isMine = 0;
+        this.$router.push({ path: "/home/mine" });
+        return;
+      }
       this.GLOBAL.previousStatus = 0;
       this.$router.push({ path: "/sellingDetails" });
     },
     sellingDetails(goodsItem) {
       if(this.GLOBAL.isDeleteCart == 0){
         this.GLOBAL.isDeleteCart = 1;
-        let i = this.result.indexOf(goodsItem.goodsId)
-        this.result.splice(i,1)
-        console.log(this.result);
+        let i = this.resultList.indexOf(goodsItem.goodsId)
+        this.resultList.splice(i,1)
         return;
       }
       this.GLOBAL.previousStatus = 1;
       this.GLOBAL.cartGoods = goodsItem;
       this.$router.push({ path: "/sellingDetails" });
     },
-    changeResult(result) {
-      if(result.length == 0) {
+    changeResult(resultList) {
+      if(resultList.length == 0) {
         this.totalPrice = 0;
         return;
       }
       let data = {
-        goodsIdList:result,
+        goodsIdList:resultList,
       }
       cart.Price(data).then(res => {
         this.totalPrice = res.totalPrice * 100;
@@ -115,8 +121,10 @@ export default {
           cancelButtonText:"取消"
         })
           .then(() => {
+            this.isDelete = 1;
             cart.Delete({goodsId:goodsId,userId:this.GLOBAL.user.userId}).then(res => {
               this.init();
+              this.totalPrice = 0;
             });
           })
           .catch(() => {
@@ -127,7 +135,25 @@ export default {
       this.$refs.checkboxes[index].toggle();
     },
     onSubmit() {
-      console.log("提交订单")
+      Dialog.confirm({
+          message: "确定购买当前所选？",
+          confirmButtonText:"确定购买",
+          cancelButtonText:"取消"
+        })
+          .then(() => {
+              let data = {
+                goodsIdList:this.resultList,
+                buyerId:this.GLOBAL.user.userId
+              };
+              order.AddList(data).then(res => {
+                Toast('恭喜您，书籍已下单，请您尽快联系卖家进行交易');
+                this.init();
+                this.totalPrice = 0;
+              });
+          })
+          .catch(() => {
+            return;
+          });
     }
   }
 };

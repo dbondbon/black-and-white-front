@@ -30,9 +30,10 @@
 </template>
 
 <script>
-import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Field, Toast } from "vant";
+import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Field, Toast,Dialog } from "vant";
 import user from "@/api/user";
 import cart from "@/api/cart";
+import order from "@/api/order";
 export default {
   name: "sellingDetails",
   components: {
@@ -40,13 +41,15 @@ export default {
     [GoodsActionBigBtn.name]: GoodsActionBigBtn,
     [GoodsActionMiniBtn.name]: GoodsActionMiniBtn,
     [Field.name]: Field,
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [Toast.name]: Dialog
   },
   data() {
     return {
         sellerNickname:'',
         goods:{},
         count:0,
+        sellerId:''
     };
   },
   mounted() {
@@ -63,6 +66,7 @@ export default {
           user.GetNickname(data).then(res => {
               this.sellerNickname = res.nickname;
               this.GLOBAL.sellerNickname = this.sellerNickname;
+              this.sellerId = res.sellerId;
           });
         } else {
           this.goods = this.GLOBAL.cartGoods;
@@ -72,6 +76,7 @@ export default {
           user.GetNickname(data).then(res => {
               this.sellerNickname = res.nickname;
               this.GLOBAL.sellerNickname = this.sellerNickname;
+              this.sellerId = res.sellerId;
           });
         }  
     },
@@ -104,7 +109,26 @@ export default {
       });
     },
     buyNow() {
-      console.log("立即购买");
+      Dialog.confirm({
+          message: "确定购买当前所选？",
+          confirmButtonText:"确定购买",
+          cancelButtonText:"取消"
+        })
+          .then(() => {
+              let data = {
+                goodsId:this.goods.goodsId,
+                sellerId:this.sellerId,
+                buyerId:this.GLOBAL.user.userId,
+              };
+              order.Add(data).then(res => {
+                Toast('恭喜您，书籍已下单，请您尽快联系卖家进行交易');
+                this.init();
+                this.totalPrice = 0;
+              });
+          })
+          .catch(() => {
+            return;
+          });
     }
   }
 };
