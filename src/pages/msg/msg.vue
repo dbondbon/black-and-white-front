@@ -1,21 +1,27 @@
 <template>
   <div class="msg">
-    <h1>消息</h1>
+    
   </div>
 </template>
 
 <script>
+import msg from "@/api/msg";
+import { List } from "vant";
 export default {
   name: "msg",
   components: {
-   
+    [List.name]: List
   },
   data() {
     return {
-      active: 0
+      
     };
   },
   mounted() {
+    this.init();
+  },
+  init() {
+
   }
 };
 </script>

@@ -80,6 +80,7 @@ export default {
       goods.FindCartGoods(data).then(res => {
         this.goodsList = res.list;
       });
+      this.totalPrice = 0;
     },
     back() {    
       if(this.GLOBAL.isMine == 1) {
@@ -93,8 +94,6 @@ export default {
     sellingDetails(goodsItem) {
       if(this.GLOBAL.isDeleteCart == 0){
         this.GLOBAL.isDeleteCart = 1;
-        let i = this.resultList.indexOf(goodsItem.goodsId)
-        this.resultList.splice(i,1)
         return;
       }
       this.GLOBAL.previousStatus = 1;
@@ -102,16 +101,17 @@ export default {
       this.$router.push({ path: "/sellingDetails" });
     },
     changeResult(resultList) {
-      if(resultList.length == 0) {
+      if(this.resultList == null || this.GLOBAL.isDeleteCart == 0 || resultList.length == 0) {
+        this.GLOBAL.isDeleteCart = 1;
         this.totalPrice = 0;
-        return;
-      }
-      let data = {
+      } else {
+        let data = {
         goodsIdList:resultList,
-      }
-      cart.Price(data).then(res => {
-        this.totalPrice = res.totalPrice * 100;
-      });
+        }
+        cart.Price(data).then(res => {
+          this.totalPrice = res.totalPrice * 100;
+        });
+      } 
     },
     deleteCart(goodsId) {
       this.GLOBAL.isDeleteCart = 0;
@@ -121,10 +121,11 @@ export default {
           cancelButtonText:"取消"
         })
           .then(() => {
-            this.isDelete = 1;
             cart.Delete({goodsId:goodsId,userId:this.GLOBAL.user.userId}).then(res => {
               this.init();
               this.totalPrice = 0;
+              this.resultList.length = 0;
+              return;
             });
           })
           .catch(() => {

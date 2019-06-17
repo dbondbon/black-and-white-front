@@ -66,7 +66,7 @@ export default {
           user.GetNickname(data).then(res => {
               this.sellerNickname = res.nickname;
               this.GLOBAL.sellerNickname = this.sellerNickname;
-              this.sellerId = res.sellerId;
+              this.sellerId = this.goods.userId;
           });
         } else {
           this.goods = this.GLOBAL.cartGoods;
@@ -76,7 +76,7 @@ export default {
           user.GetNickname(data).then(res => {
               this.sellerNickname = res.nickname;
               this.GLOBAL.sellerNickname = this.sellerNickname;
-              this.sellerId = res.sellerId;
+              this.sellerId = this.goods.userId;
           });
         }  
     },
@@ -96,7 +96,8 @@ export default {
       }
     },
     sendMsg() {
-      console.log("联系卖家");
+      this.GLOBAL.lastPath = "/".concat(this.$route.name)
+      this.$router.push({ path: "/sendMsg" });
     },
     addToCart() {
       let data = {
@@ -120,6 +121,7 @@ export default {
                 sellerId:this.sellerId,
                 buyerId:this.GLOBAL.user.userId,
               };
+              console.log(data)
               order.Add(data).then(res => {
                 Toast('恭喜您，书籍已下单，请您尽快联系卖家进行交易');
                 this.init();

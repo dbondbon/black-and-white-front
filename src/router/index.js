@@ -13,6 +13,7 @@ import Home from '@/pages/home/home'
 import Setting from '@/pages/setting/setting'
 import BuyOrder from '@/pages/buyOrder/buyOrder'
 import SellOrder from '@/pages/sellOrder/sellOrder'
+import SendMsg from '@/pages/sendMsg/sendMsg'
 
 Vue.use(Router)
 
@@ -82,6 +83,11 @@ const router =  new Router({
       path:'/sellOrder',
       name:'sellOrder',
       component: SellOrder,
+    },
+    {
+      path:'/sendMsg',
+      name:'sendMsg',
+      component: SendMsg,
     },
   ]
 })
