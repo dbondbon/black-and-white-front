@@ -25,4 +25,12 @@ export default {
             data: params,
         })
     },
+    DeleteGoods(params) {
+        let url = '/goods/deleteGoods'
+        return axios({
+            method: 'post',
+            url: url,
+            data: params,
+        })
+    },
 }

@@ -32,4 +32,12 @@ export default {
             data: params,
         })
     },
+    OnSaleList(params) {
+        let url = '/user/onSaleList'
+        return axios({
+            method: 'post',
+            url: url,
+            data: params,
+        })
+    }
 }

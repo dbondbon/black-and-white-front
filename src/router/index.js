@@ -14,7 +14,7 @@ import Setting from '@/pages/setting/setting'
 import BuyOrder from '@/pages/buyOrder/buyOrder'
 import SellOrder from '@/pages/sellOrder/sellOrder'
 import SendMsg from '@/pages/sendMsg/sendMsg'
-
+import OnSale from '@/pages/onSale/onSale'
 Vue.use(Router)
 
 const router =  new Router({
@@ -88,6 +88,11 @@ const router =  new Router({
       path:'/sendMsg',
       name:'sendMsg',
       component: SendMsg,
+    },
+    {
+      path:'/onSale',
+      name:'onSale',
+      component: OnSale,
     },
   ]
 })
