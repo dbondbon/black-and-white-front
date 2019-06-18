@@ -1,7 +1,7 @@
 <template>
   <div class="onSale">
     <van-nav-bar title="我的待售" left-text="返回" left-arrow @click-left="back"/>
-    <van-list :finished="finished" v-if="goodsList.length != 0">
+    <van-list :finished="finished" v-if="goodsList.length!=0">
       <van-card
         :title="goodsItem.name"
         :desc="goodsItem.author"
@@ -55,8 +55,10 @@ export default {
       };
       user.OnSaleList(data).then(res => {
         if (res.code == "1") {
+          this.goodsList.length = 0;
+        } else {
+          this.goodsList = res.goodsList;
         }
-        this.goodsList = res.goodsList;
       });
     },
     back() {

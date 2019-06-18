@@ -97,7 +97,7 @@ export default {
     },
     sendMsg() {
       this.GLOBAL.lastPath = "/".concat(this.$route.name)
-      this.$router.push({ path: "/sendMsg" });
+      this.$router.push({ path: "/sendMsg" , query:{receiverId:this.sellerId}});
     },
     addToCart() {
       let data = {

@@ -15,6 +15,8 @@ import BuyOrder from '@/pages/buyOrder/buyOrder'
 import SellOrder from '@/pages/sellOrder/sellOrder'
 import SendMsg from '@/pages/sendMsg/sendMsg'
 import OnSale from '@/pages/onSale/onSale'
+import ChatFrame from '@/pages/chatFrame/chatFrame'
+
 Vue.use(Router)
 
 const router =  new Router({
@@ -93,6 +95,11 @@ const router =  new Router({
       path:'/onSale',
       name:'onSale',
       component: OnSale,
+    },
+    {
+      path:'/chatFrame',
+      name:'chatFrame',
+      component: ChatFrame,
     },
   ]
 })

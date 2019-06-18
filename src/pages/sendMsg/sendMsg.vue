@@ -4,11 +4,11 @@
 
     <van-cell-group>
       <van-field
-        v-model="message"
+        v-model="Message.msgContent"
         label="留言"
         type="textarea"
-        placeholder="请输入留言"
-        rows="4"
+        placeholder="最多255个字符"
+        rows="8"
         autosize
       />
     </van-cell-group>
@@ -20,17 +20,23 @@
 </template>
 
 <script>
-import { Field, Button, Dialog } from "vant";
+import { Field, Button, Dialog, Toast } from "vant";
+import msg from "@/api/msg";
 export default {
   name: "msg",
   components: {
     [Field.name]: Field,
     [Button.name]: Button,
-    [Dialog.name]: Dialog
+    [Dialog.name]: Dialog,
+    [Toast.name]: Toast
   },
   data() {
       return {
-          
+          Message:{
+            senderId:'',
+            receiverId:'',
+            msgContent:'',
+          },
       }
   },
   methods: {
@@ -38,7 +44,30 @@ export default {
       this.$router.push({ path: this.GLOBAL.lastPath });
     },
     send() {
-      console.log("发送留言");
+      if(this.Message.msgContent == null || this.Message.msgContent == '') {
+        Toast.fail("留言内容不能为空");
+        return;
+      }
+      if(this.Message.msgContent.length > 255) {
+        Toast.fail("留言字数超过限制");
+        return;
+      }
+      this.Message.senderId = this.GLOBAL.user.userId;
+      this.Message.receiverId = this.$route.query.receiverId;
+      msg.Add(this.Message).then(res => {
+        Dialog.confirm({
+          title: "发布成功",
+          message: "是否继续发布",
+          confirmButtonText:"是",
+          cancelButtonText:"否"
+        })
+          .then(() => {
+             this.Message.msgContent = '';
+          })
+          .catch(() => {
+            this.back();
+          });
+      });
     }
   }
 };
