@@ -57,9 +57,9 @@ export default {
   },
   created () {
       //定时器 自动请求
-      setInterval(() => {
-          this.init()
-      }, 5000)
+      // setInterval(() => {
+      //     this.init()
+      // }, 5000)
   },
   methods: {
     init() {

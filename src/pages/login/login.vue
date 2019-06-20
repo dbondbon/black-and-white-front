@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="login-logo">
-      <img src="../../assets/logo.png" class="login-img"/>
+      <img src="../../assets/logo.png" class="login-img"/>  
     </div>
     <div class="login-input">
       <van-cell-group>
