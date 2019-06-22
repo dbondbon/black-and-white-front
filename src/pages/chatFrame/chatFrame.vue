@@ -76,9 +76,13 @@ export default {
         msg.GetOne(data).then(res => {
             this.msgList = res.msgList;
             this.msgList.forEach(item => {
-            if(item.senderId == this.GLOBAL.user.userId) {
-              item.senderNickname = "我";
-            }
+              if(item.senderId == this.GLOBAL.user.userId) {
+                item.senderNickname = "我";
+              }
+              // 格式化日期
+              var dt= new Date(item.sendTime);  
+              console.log(String(dt));
+              // 待截取 将日期转为yyyy-MM-dd HH:mm:ss的格式
           });
         });
     },
