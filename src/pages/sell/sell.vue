@@ -32,6 +32,7 @@
 <script>
 import { Button, Field, Toast, Uploader, Dialog, Icon } from "vant";
 import goods from "@/api/goods";
+import common from "@/api/common";
 export default {
   name: "sell",
   components: {
