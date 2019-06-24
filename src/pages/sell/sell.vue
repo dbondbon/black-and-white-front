@@ -2,17 +2,13 @@
   <div class="sell">
     <van-nav-bar title="卖书" left-text="返回" left-arrow @click-left="onClickLeft"/>
 
-    <!-- 待实现，上传图片 -->
-    <!-- <div class="uploadWrapper">
-      <van-uploader 
-      :after-read="uploadImg" 
-      :preview-image="true"
-      class="upload"
-      />
-    </div> -->
-    
     <van-cell-group class="headInput">
-      <!-- <van-field v-model="goods.name" label="添加封面" placeholder="点击此区域上传封面" disabled /> -->
+      <div class="uploadWrapper">
+        点击上传封面
+        <van-uploader :after-read="uploadImg">
+          <van-icon name="add-o" size="20px"/>
+        </van-uploader>
+      </div>
       <van-field v-model="goods.name" clearable label="书名" placeholder="请输入书名"/>
       <van-field v-model="goods.author" clearable label="作者" placeholder="请输入作者"/>
       <van-field v-model="goods.publisher" clearable label="出版社" placeholder="请输入出版社"/>
@@ -25,7 +21,7 @@
         rows="3"
       />
     </van-cell-group>
-    
+
     <div class="submit">
       <van-button type="primary" v-if="submitFlag==0" round size="large" @click="submit">发布</van-button>
       <van-button type="primary" v-else round disabled size="large">发布</van-button>
@@ -34,7 +30,7 @@
 </template>
 
 <script>
-import { Button, Field, Toast, Uploader, Dialog } from "vant";
+import { Button, Field, Toast, Uploader, Dialog, Icon } from "vant";
 import goods from "@/api/goods";
 export default {
   name: "sell",
@@ -44,6 +40,7 @@ export default {
     [Uploader.name]: Uploader,
     [Toast.name]: Toast,
     [Dialog.name]: Dialog,
+    [Icon.name]: Icon
   },
   data() {
     return {
@@ -109,8 +106,8 @@ export default {
       }
       Toast.loading({
         mask: true,
-        duration:0,
-        message: '正在发布...'
+        duration: 0,
+        message: "正在发布..."
       });
       this.goods.userId = this.GLOBAL.user.userId;
       this.submitFlag = 1;
@@ -119,19 +116,19 @@ export default {
         Dialog.confirm({
           title: "发布成功",
           message: "是否继续发布",
-          confirmButtonText:"是",
-          cancelButtonText:"否"
+          confirmButtonText: "是",
+          cancelButtonText: "否"
         })
           .then(() => {
-             this.submitFlag = 0;
-             this.goods.name = '';
-             this.goods.price = '';
-             this.goods.description = '';
-             this.goods.publisher = '';
-             this.goods.author = '';
+            this.submitFlag = 0;
+            this.goods.name = "";
+            this.goods.price = "";
+            this.goods.description = "";
+            this.goods.publisher = "";
+            this.goods.author = "";
           })
           .catch(() => {
-            this.$router.push({path: "/home"});
+            this.$router.push({ path: "/home" });
           });
       });
     }
@@ -145,15 +142,7 @@ export default {
     text-align: center;
   }
   .uploadWrapper {
-    position: absolute;
-    right: 190px;
-    height: 45px;
-    width: 50px;
-    .upload {
-      width: 50px;
-      height: 45px;
-      z-index:10;
-    }
+    height: 40px;
   }
 }
 </style>
