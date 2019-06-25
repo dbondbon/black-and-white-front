@@ -62,10 +62,12 @@ export default {
     },
     uploadImg(file) {
       // 此时可以自行将文件上传至服务器
-      console.log(file);
       let fd = new FormData(); 
       fd.append('file',file.file); 
       console.log(fd);
+      common.UploadBookImg(fd).then(res => {
+        console.log(res);
+      });
     },
     submit() {
       if (this.goods.name == null || this.goods.name == "") {

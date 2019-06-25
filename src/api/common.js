@@ -1,7 +1,7 @@
 import axios from '../common/js/http'
 
 export default {
-    UploadImg(params) {
+    UploadBookImg(params) {
         let url = '/img/bookImg'
         return axios({
             method: 'post',
