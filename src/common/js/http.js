@@ -15,6 +15,19 @@ const instance = axios.create({
 })
 
 /**
+ * http request拦截器
+ */
+instance.interceptors.request.use(
+    config => {
+        if(config.url.indexOf("/img")>=0){
+            // 上传图片
+            config.headers['Content-Type'] = 'multipart/form-data';
+        }
+        return config
+    }
+)
+
+/**
  * http response 拦截器
  */
 instance.interceptors.response.use(
