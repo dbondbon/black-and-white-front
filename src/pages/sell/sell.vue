@@ -52,8 +52,10 @@ export default {
         description: "",
         publisher: "",
         author: "",
-        userId: ""
-      }
+        userId: "",
+        imgId:""
+      },
+      imgFile:null
     };
   },
   methods: {
@@ -61,12 +63,11 @@ export default {
       this.$router.push({ path: "/home" });
     },
     uploadImg(file) {
-      // 此时可以自行将文件上传至服务器
-      let fd = new FormData(); 
-      fd.append('file',file.file); 
-      console.log(fd);
-      common.UploadBookImg(fd).then(res => {
-        console.log(res);
+      this.imgFile = new FormData(); 
+      this.imgFile.append('file',file.file); 
+      // 上传图片到服务器，返回图片id
+      common.UploadBookImg(this.imgFile).then(res => {
+        this.goods.imgId = res.imgId;
       });
     },
     submit() {
@@ -118,6 +119,7 @@ export default {
       this.goods.userId = this.GLOBAL.user.userId;
       this.submitFlag = 1;
       goods.Published(this.goods).then(res => {
+        
         Toast.clear();
         Dialog.confirm({
           title: "发布成功",
