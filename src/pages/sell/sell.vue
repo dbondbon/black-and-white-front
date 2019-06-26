@@ -66,7 +66,7 @@ export default {
       this.imgFile = new FormData(); 
       this.imgFile.append('file',file.file); 
       // 上传图片到服务器，返回图片id
-      common.UploadBookImg(this.imgFile).then(res => {
+      common.UploadImg(this.imgFile).then(res => {
         this.goods.imgId = res.imgId;
       });
     },
