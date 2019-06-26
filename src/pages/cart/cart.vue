@@ -16,7 +16,7 @@
             </div>
             <div slot="thumb">
               <img src="../../assets/book.jpg" v-if="goodsItem.imgId == null || goodsItem.imgId == ''">
-              <img :src="this.GLOBAL.imgSrc+goodsItem.imgId" v-else>
+              <img :src="imgSrc+goodsItem.imgId" v-else>
             </div>
             <div slot="footer">
               <van-button size="mini" @click.native="deleteCart(goodsItem.goodsId)">删除</van-button>
@@ -68,6 +68,7 @@ export default {
       totalPrice:0,
       resultList: [],
       finished: true,
+      imgSrc:''
     };
   },
   mounted() {
@@ -75,6 +76,7 @@ export default {
   },
   methods: {
     init() {
+      this.imgSrc = this.GLOBAL.imgSrc;
       let data = {
         userId:this.GLOBAL.user.userId,
       }

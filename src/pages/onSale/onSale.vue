@@ -13,7 +13,8 @@
           <span class="bookPrice">￥{{goodsItem.price}}</span>
         </div>
         <div slot="thumb">
-          <img src="../../assets/book.jpg">
+          <img src="../../assets/book.jpg" v-if="goodsItem.imgId == null || goodsItem.imgId == ''">
+          <img :src="imgSrc+goodsItem.imgId" v-else>
         </div>
         <div slot="footer">
           <van-button size="mini" @click.native="deleteGoods(goodsItem.goodsId)">删除</van-button>
@@ -42,7 +43,8 @@ export default {
   data() {
     return {
       goodsList: [],
-      finished: true
+      finished: true,
+      imgSrc:''
     };
   },
   mounted() {
@@ -50,6 +52,7 @@ export default {
   },
   methods: {
     init() {
+      this.imgSrc = this.GLOBAL.imgSrc;
       let data = {
         userId: this.GLOBAL.user.userId
       };
