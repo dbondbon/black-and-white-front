@@ -16,7 +16,7 @@
       </div>
       <div slot="thumb">
         <img src="../../assets/book.jpg" v-if="goodsItem.imgId == null || goodsItem.imgId == ''">
-        <img :src="imgSrc+goodsItem.imgId" v-else>
+        <img :src="this.GLOBAL.imgSrc+goodsItem.imgId" v-else>
       </div>
       </van-card>
     </van-list>
@@ -45,7 +45,6 @@ export default {
       goodsList: [],
       loading: false,
       finished: true,
-      imgSrc:"http://localhost:8080/img/get?imgId="
     };
   },
   mounted() {

@@ -15,7 +15,8 @@
               <span class="bookPrice">￥{{goodsItem.price}}</span>
             </div>
             <div slot="thumb">
-              <img src="../../assets/book.jpg">
+              <img src="../../assets/book.jpg" v-if="goodsItem.imgId == null || goodsItem.imgId == ''">
+              <img :src="this.GLOBAL.imgSrc+goodsItem.imgId" v-else>
             </div>
             <div slot="footer">
               <van-button size="mini" @click.native="deleteCart(goodsItem.goodsId)">删除</van-button>
