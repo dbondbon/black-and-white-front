@@ -53,11 +53,8 @@ export default {
   methods: {
     init() {
       this.imgSrc = this.GLOBAL.imgSrc;
-      let data = {
-        userId: this.GLOBAL.user.userId
-      };
-      user.OnSaleList(data).then(res => {
-        if (res.code == "1") {
+      goods.OnSaleList(this.GLOBAL.user.userId).then(res => {
+        if (res.goodsList == null) {
           this.goodsList.length = 0;
         } else {
           this.goodsList = res.goodsList;

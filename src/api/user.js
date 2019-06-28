@@ -18,9 +18,9 @@ export default {
         })
     },
     GetUsername() {
-        let url = '/user/getUsername'
+        let url = '/user/1'
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
         })
     },
@@ -32,12 +32,4 @@ export default {
             data: params,
         })
     },
-    OnSaleList(params) {
-        let url = '/user/onSaleList'
-        return axios({
-            method: 'post',
-            url: url,
-            data: params,
-        })
-    }
 }

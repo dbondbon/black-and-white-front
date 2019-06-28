@@ -58,7 +58,7 @@ export default {
   methods: {
     getUsername() {
         user.GetUsername().then(res =>{
-            this.user.username = res.username;
+            this.user.username = res.user.username;
         });
     },
     onClickLeft() {

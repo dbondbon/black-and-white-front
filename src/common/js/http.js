@@ -10,7 +10,6 @@ const instance = axios.create({
     withCredentials: true, // 是否允许带cookie这些
     headers: {
         'X-Requested-With': 'XMLHttpRequest',  //表明为Ajax异步请求
-        'Content-type': 'application/json',
     }
 })
 
@@ -19,6 +18,9 @@ const instance = axios.create({
  */
 instance.interceptors.request.use(
     config => {
+        if(config.method=='post' || config.method=='put'){
+            config.headers['Content-Type'] = 'application/json';
+        }
         if(config.url.indexOf("/img")>=0){
             // 上传图片
             config.headers['Content-Type'] = 'multipart/form-data';

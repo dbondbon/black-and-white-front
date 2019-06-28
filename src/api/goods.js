@@ -1,36 +1,33 @@
 import axios from '../common/js/http'
 
 export default {
-    Published(params) {
-        let url = '/goods/published'
+    Published(goods) {
+        let url = '/goods'
         return axios({
             method: 'post',
             url: url,
-            data: params,
+            data: goods,
         })
     },
-    FindGoods(params) {
-        let url = '/goods/findGoods'
+    FindGoods(goods) {
+        let url = '/goods?userId='.concat(goods.userId,"&name=",goods.name)
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     },
-    FindCartGoods(params) {
-        let url = '/goods/findCartGoods'
+    OnSaleList(userId) {
+        let url = '/goods/'.concat(userId)
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     },
-    DeleteGoods(params) {
-        let url = '/goods/deleteGoods'
+    DeleteGoods(goodsId) {
+        let url = '/goods/'.concat(goodsId)
         return axios({
-            method: 'post',
+            method: 'delete',
             url: url,
-            data: params,
         })
     },
 }
