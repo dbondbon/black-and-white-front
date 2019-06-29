@@ -10,11 +10,10 @@ export default {
         })
     },
     List(params) {
-        let url = '/cart/list'
+        let url = '/cart/'.concat(params)
         return axios({
-            method: 'post',
-            url: url,
-            data: params,
+            method: 'get',
+            url: url
         })
     },
     Delete(params) {

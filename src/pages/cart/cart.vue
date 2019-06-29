@@ -47,7 +47,6 @@
 <script>
 import { SubmitBar, Card, Button, Checkbox, CheckboxGroup, List, Icon, Dialog, Toast  } from "vant";
 import cart from "@/api/cart";
-import goods from "@/api/goods";
 import order from "@/api/order";
 export default {
   name: "cart",
@@ -77,11 +76,8 @@ export default {
   methods: {
     init() {
       this.imgSrc = this.GLOBAL.imgSrc;
-      let data = {
-        userId:this.GLOBAL.user.userId,
-      }
-      goods.FindCartGoods(data).then(res => {
-        this.goodsList = res.list;
+      cart.List(this.GLOBAL.user.userId).then(res => {
+        this.goodsList = res.cartGoodsList;
       });
       this.totalPrice = 0;
     },
