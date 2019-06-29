@@ -104,10 +104,7 @@ export default {
         this.GLOBAL.isDeleteCart = 1;
         this.totalPrice = 0;
       } else {
-        let data = {
-        goodsIdList:resultList,
-        }
-        cart.Price(data).then(res => {
+        cart.Price(resultList).then(res => {
           this.totalPrice = res.totalPrice * 100;
         });
       } 
@@ -120,7 +117,11 @@ export default {
           cancelButtonText:"取消"
         })
           .then(() => {
-            cart.Delete({goodsId:goodsId,userId:this.GLOBAL.user.userId}).then(res => {
+            let data = {
+              goodsId:goodsId,
+              userId:this.GLOBAL.user.userId
+            }
+            cart.DeleteOne(data).then(res => {
               this.init();
               this.totalPrice = 0;
               this.resultList.length = 0;

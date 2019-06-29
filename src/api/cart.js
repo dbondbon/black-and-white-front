@@ -2,7 +2,7 @@ import axios from '../common/js/http'
 
 export default {
     Add(params) {
-        let url = '/cart/add'
+        let url = '/cart'
         return axios({
             method: 'post',
             url: url,
@@ -16,12 +16,11 @@ export default {
             url: url
         })
     },
-    Delete(params) {
-        let url = '/cart/delete'
+    DeleteOne(params) {
+        let url = '/cart?'.concat("userId=",params.userId,"&goodsId=",params.goodsId);
         return axios({
-            method: 'post',
+            method: 'delete',
             url: url,
-            data: params,
         })
     },
     Price(params) {

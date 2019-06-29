@@ -81,11 +81,8 @@ export default {
         }  
     },
     getCartCount() {
-      let data = {
-        userId:this.GLOBAL.user.userId,
-      }
-      cart.List(data).then(res => {
-        this.count = res.cartList.length;
+      cart.List(this.GLOBAL.user.userId).then(res => {
+        this.count = res.cartGoodsList.length;
       });
     },
     back() {
