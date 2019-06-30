@@ -35,10 +35,7 @@ export default {
   },
   methods: {
     init() {
-      let data = {
-        userId: this.GLOBAL.user.userId
-      };
-      msg.GetAll(data).then(res => {
+      msg.GetAll(this.GLOBAL.user.userId).then(res => {
         if(res.code == 1) {
           console.log("暂无消息");
         } else {

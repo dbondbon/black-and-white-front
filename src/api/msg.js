@@ -2,7 +2,7 @@ import axios from '../common/js/http'
 
 export default {
     Add(params) {
-        let url = '/msg/add'
+        let url = '/msg'
         return axios({
             method: 'post',
             url: url,
@@ -10,19 +10,17 @@ export default {
         })
     },
     GetAll(params) {
-        let url = '/msg/getAll'
+        let url = '/msg/'.concat(params);
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     },
     GetOne(params) {
-        let url = '/msg/getOne'
+        let url = '/msg?'.concat("userId=",params.userId,"&otherId=",params.otherId);
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     }
 }
