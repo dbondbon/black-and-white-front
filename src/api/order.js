@@ -2,7 +2,7 @@ import axios from '../common/js/http'
 
 export default {
     Add(params) {
-        let url = '/order/add'
+        let url = '/order'
         return axios({
             method: 'post',
             url: url,
@@ -18,19 +18,17 @@ export default {
         })
     },
     BuyList(params) {
-        let url = '/order/buyList'
+        let url = '/order/'.concat(params);
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     },
     SellList(params) {
-        let url = '/order/sellList'
+        let url = '/order/'.concat(params);
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     }
 }

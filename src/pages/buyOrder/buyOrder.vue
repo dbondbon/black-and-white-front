@@ -26,10 +26,7 @@ export default {
   },
   methods: {
     init() {
-      let data = {
-        userId: this.GLOBAL.user.userId
-      };
-      order.BuyList(data).then(res => {
+      order.BuyList(this.GLOBAL.user.userId).then(res => {
         if (res.code == "1") {
           console.log("暂无订单");
         } 

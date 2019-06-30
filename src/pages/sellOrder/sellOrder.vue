@@ -32,10 +32,7 @@ export default {
   },
   methods: {
     init() {
-      let data = {
-        userId: this.GLOBAL.user.userId
-      };
-      order.SellList(data).then(res => {
+      order.SellList(this.GLOBAL.user.userId).then(res => {
         if (res.code == "1") {
           console.log("暂无订单");
         }
