@@ -2,15 +2,14 @@ import axios from '../common/js/http'
 
 export default {
     Login(params) {
-        let url = '/user/login'
+        let url = '/user?'.concat("username=",params.username,"&password=",params.password);
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     },
     Register(params) {
-        let url = '/user/register'
+        let url = '/user'
         return axios({
             method: 'post',
             url: url,
