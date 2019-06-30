@@ -2,7 +2,7 @@ import axios from '../common/js/http'
 
 export default {
     UploadImg(params) {
-        let url = '/img/add'
+        let url = '/img'
         return axios({
             method: 'post',
             url: url,
@@ -11,11 +11,10 @@ export default {
         })
     },
     GetImg(params) {
-        let url = '/img/get'
+        let url = '/img/'.concat(params)
         return axios({
-            method: 'post',
+            method: 'get',
             url: url,
-            data: params,
         })
     }
 }

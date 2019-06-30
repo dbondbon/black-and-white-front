@@ -8,7 +8,7 @@ const isMine = null // 是否从main进入
 const isDeleteCart = null //是否删除购物车内的订单
 
 const lastPath = null
-const imgSrc = "http://localhost:8080/img/get?imgId="  //图片请求路径
+const imgSrc = "http://localhost:8080/img/"  //图片请求路径
 
 
 export default {
