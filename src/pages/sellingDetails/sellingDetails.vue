@@ -60,25 +60,20 @@ export default {
     init() {
         if(this.GLOBAL.previousStatus == 0) {
           this.goods = this.GLOBAL.goods;
-          let data = {
-          userId:this.GLOBAL.goods.userId
-          };
-          user.GetNickname(data).then(res => {
-              this.sellerNickname = res.nickname;
+          user.GetNickname(this.GLOBAL.goods.userId).then(res => {
+              this.sellerNickname = res.user.nickname;
               this.GLOBAL.sellerNickname = this.sellerNickname;
               this.sellerId = this.goods.userId;
           });
         } else {
           this.goods = this.GLOBAL.cartGoods;
-          let data = {
-          userId:this.GLOBAL.cartGoods.userId
-          };
-          user.GetNickname(data).then(res => {
-              this.sellerNickname = res.nickname;
+          user.GetNickname(this.GLOBAL.cartGoods.userId).then(res => {
+              this.sellerNickname = res.user.nickname;
               this.GLOBAL.sellerNickname = this.sellerNickname;
               this.sellerId = this.goods.userId;
           });
-        }  
+        }
+        console.log(this.sellerNickname);  
     },
     getCartCount() {
       cart.List(this.GLOBAL.user.userId).then(res => {
