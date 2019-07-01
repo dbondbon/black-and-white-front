@@ -2,13 +2,14 @@
   <div class="sell">
     <van-nav-bar title="卖书" left-text="返回" left-arrow @click-left="onClickLeft"/>
 
-    <van-cell-group class="headInput">
-      <div class="uploadWrapper">
-        点击上传封面
+    <div class="uploadWrapper">
         <van-uploader :after-read="uploadImg">
           <van-icon name="add-o" size="20px"/>
         </van-uploader>
-      </div>
+    </div>
+
+    <van-cell-group class="headInput">
+      <van-field clearable label="点击上传封面" />
       <van-field v-model="goods.name" clearable label="书名" placeholder="请输入书名"/>
       <van-field v-model="goods.author" clearable label="作者" placeholder="请输入作者"/>
       <van-field v-model="goods.publisher" clearable label="出版社" placeholder="请输入出版社"/>
@@ -68,6 +69,7 @@ export default {
       // 上传图片到服务器，返回图片id
       common.UploadImg(this.imgFile).then(res => {
         this.goods.imgId = res.imgId;
+        Toast('上传成功，如需重新上传请直接点击');
       });
     },
     submit() {
@@ -150,7 +152,10 @@ export default {
     text-align: center;
   }
   .uploadWrapper {
-    height: 40px;
+    position: absolute;
+    top: 60px;
+    left: 150px;
+    z-index: 10;
   }
 }
 </style>
