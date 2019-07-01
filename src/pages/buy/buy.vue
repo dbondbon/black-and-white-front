@@ -8,25 +8,35 @@
       @cancel="onCancel"
     />
 
-    <!-- 待实现：分页展示数据 -->
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <van-card v-for="goodsItem in goodsList" :key="goodsItem.goodsId" :title="goodsItem.name" :desc="goodsItem.author" :centered="true" @click="sellingDetails(goodsItem)">
-      <div slot="price">
-        <span class="bookPrice">￥{{goodsItem.price}}</span>
-      </div>
-      <div slot="thumb">
-        <img src="../../assets/book.jpg" v-if="goodsItem.imgId == null || goodsItem.imgId == ''">
-        <img :src="imgSrc+goodsItem.imgId" v-else>
-      </div>
+    <van-list v-model="loading" 
+      :finished="finished" 
+      finished-text="没有更多了" 
+      @load="onLoad"
+      :immediate-check=false
+      offset=0
+    >
+      <van-card
+        v-for="goodsItem in goodsList"
+        :key="goodsItem.goodsId"
+        :title="goodsItem.name"
+        :desc="goodsItem.author"
+        :centered="true"
+        @click="sellingDetails(goodsItem)"
+      >
+        <div slot="price">
+          <span class="bookPrice">￥{{goodsItem.price}}</span>
+        </div>
+        <div slot="thumb">
+          <img src="../../assets/book.jpg" v-if="goodsItem.imgId == null || goodsItem.imgId == ''" />
+          <img :src="imgSrc+goodsItem.imgId" v-else />
+        </div>
       </van-card>
     </van-list>
-
-    
   </div>
 </template>
 
 <script>
-import { Search, Card, Button, List } from "vant";
+import { Search, Card, Button, List, Toast } from "vant";
 import goods from "@/api/goods";
 export default {
   name: "buy",
@@ -34,18 +44,21 @@ export default {
     [Search.name]: Search,
     [Card.name]: Card,
     [Button.name]: Button,
-    [List.name]: List
+    [List.name]: List,
+    [Toast.name]: Toast
   },
   data() {
     return {
       goods: {
         name: "",
-        userId: ""
+        userId: "",
+        pageSize: 10,
+        pageNum: 1
       },
       goodsList: [],
       loading: false,
-      finished: true,
-      imgSrc:''
+      finished: false,
+      imgSrc: ""
     };
   },
   mounted() {
@@ -56,19 +69,25 @@ export default {
       this.imgSrc = this.GLOBAL.imgSrc;
       this.goods.userId = this.GLOBAL.user.userId;
       goods.FindGoods(this.goods).then(res => {
-        this.goodsList = res.list;
+        this.goodsList = res.pageInfo.list;
       });
     },
     onLoad() {
-      console.log("加载更多");
+      this.goods.pageNum = this.goods.pageNum + 1;
+      goods.FindGoods(this.goods).then(res => {
+        this.goodsList = this.goodsList.concat(res.pageInfo.list);
+        this.loading = false;
+        if (res.pageInfo.isLastPage == true) {
+          this.finished = true;
+        }
+      });
     },
     onSearch() {
       goods.FindGoods(this.goods).then(res => {
-        this.goodsList = res.list;
+        this.goodsList = res.pageInfo.list;
       });
     },
     onCancel() {
-      console.log("取消");
     },
     sellingDetails(goodsItem) {
       this.GLOBAL.goods = goodsItem;
@@ -81,7 +100,6 @@ export default {
 
 <style lang="less" scoped>
 .buy {
-  
 }
 </style>
 

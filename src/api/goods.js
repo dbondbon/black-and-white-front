@@ -10,7 +10,8 @@ export default {
         })
     },
     FindGoods(params) {
-        let url = '/goods?userId='.concat(params.userId,"&name=",params.name)
+        let url = '/goods?userId='.concat(params.userId,"&name=",params.name
+                    ,"&pageSize=",params.pageSize,"&pageNum=",params.pageNum);
         return axios({
             method: 'get',
             url: url,
