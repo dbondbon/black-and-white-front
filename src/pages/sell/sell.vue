@@ -69,7 +69,7 @@ export default {
       // 上传图片到服务器，返回图片id
       common.UploadImg(this.imgFile).then(res => {
         if (res.code == 1) {
-          Toast.fail(res.msg.concat(",请选择.jpg或.png格式"));
+          Toast.fail(res.msg);
         } else {
           this.goods.imgId = res.imgId;
           Toast('上传成功，如需重新上传请直接点击');
