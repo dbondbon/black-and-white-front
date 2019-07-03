@@ -2,7 +2,7 @@
   <div class="buyOrder">
     <van-nav-bar title="我下的订单" left-text="返回" left-arrow @click-left="back"/>
     <van-list :finished="finished" v-if="orderList.length != 0"> 
-        <van-cell title="订单编号" :value=order.orderId is-link v-for="order in this.orderList" :key="order.orderId"/>
+        <van-cell title="订单编号" :value=order.orderId is-link v-for="order in this.orderList" :key="order.orderId" @click="toDetails(order)"/>
     </van-list>
   </div>
 </template>
@@ -35,6 +35,9 @@ export default {
     },
     back() {
       this.$router.push({ path: "/home/mine" });
+    },
+    toDetails(order) {
+      this.$router.push({ path: "/buyOrderDetails", query: {order:order} });
     }
   }
 };

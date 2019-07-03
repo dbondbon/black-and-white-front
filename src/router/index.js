@@ -12,6 +12,7 @@ import Mine from '@/pages/mine/mine'
 import Home from '@/pages/home/home'
 import Setting from '@/pages/setting/setting'
 import BuyOrder from '@/pages/buyOrder/buyOrder'
+import BuyOrderDetails from '@/pages/BuyOrderDetails/BuyOrderDetails'
 import SellOrder from '@/pages/sellOrder/sellOrder'
 import SendMsg from '@/pages/sendMsg/sendMsg'
 import OnSale from '@/pages/onSale/onSale'
@@ -80,6 +81,11 @@ const router =  new Router({
       path:'/buyOrder',
       name:'buyOrder',
       component: BuyOrder,
+    },
+    {
+      path:'/buyOrderDetails',
+      name:'buyOrderDetails',
+      component: BuyOrderDetails,
     },
     {
       path:'/sellOrder',
