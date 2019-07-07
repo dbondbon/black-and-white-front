@@ -1,8 +1,8 @@
 <template>
   <div class="buyOrder">
     <van-nav-bar title="我下的订单" left-text="返回" left-arrow @click-left="back"/>
-    <van-list :finished="finished" v-if="orderList.length != 0"> 
-        <van-cell title="订单编号" :value=order.orderId is-link v-for="order in this.orderList" :key="order.orderId" @click="toDetails(order)"/>
+    <van-list :finished="finished" v-if="orderMap.length != 0"> 
+        <van-cell title="订单编号" :value="key" is-link v-for="(value, key) in orderMap" :key="key" @click="toDetails(value,key)"/>
     </van-list>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      orderList: [],
+      orderMap:[],
       finished: true,
     };
   },
@@ -27,17 +27,15 @@ export default {
   methods: {
     init() {
       order.BuyList(this.GLOBAL.user.userId).then(res => {
-        if (res.orderList == null || res.orderList.length == 0) {
-          console.log("暂无订单");
-        } 
-        this.orderList = res.orderList;
+        this.orderMap = res.orderMap;
+        console.log(this.orderMap);
       });
     },
     back() {
       this.$router.push({ path: "/home/mine" });
     },
-    toDetails(order) {
-      this.$router.push({ path: "/buyOrderDetails", query: {order:order} });
+    toDetails(value, key) {
+      this.$router.push({ path: "/buyOrderDetails", query: {goods:value, code:key} });
     }
   }
 };
