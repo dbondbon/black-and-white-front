@@ -18,14 +18,14 @@ export default {
         })
     },
     BuyList(params) {
-        let url = '/order/'.concat(params);
+        let url = '/order/0/'.concat(params);
         return axios({
             method: 'get',
             url: url,
         })
     },
     SellList(params) {
-        let url = '/order/'.concat(params);
+        let url = '/order/1/'.concat(params);
         return axios({
             method: 'get',
             url: url,

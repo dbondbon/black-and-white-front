@@ -27,7 +27,7 @@ export default {
   methods: {
     init() {
       order.BuyList(this.GLOBAL.user.userId).then(res => {
-        if (res.code == "1") {
+        if (res.orderList == null || res.orderList.length == 0) {
           console.log("暂无订单");
         } 
         this.orderList = res.orderList;

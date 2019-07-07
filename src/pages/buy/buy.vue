@@ -13,7 +13,7 @@
       finished-text="没有更多了" 
       @load="onLoad"
       :immediate-check=false
-      offset=0
+      :offset="offsetLength"
     >
       <van-card
         v-for="goodsItem in goodsList"
@@ -58,7 +58,8 @@ export default {
       goodsList: [],
       loading: false,
       finished: false,
-      imgSrc: ""
+      imgSrc: "",
+      offsetLength:40
     };
   },
   mounted() {
@@ -79,7 +80,7 @@ export default {
         this.loading = false;
         if (res.pageInfo.isLastPage == true) {
           this.finished = true;
-          Toast('已经到底了');
+          // Toast('已经到底了');
         }
       });
     },
