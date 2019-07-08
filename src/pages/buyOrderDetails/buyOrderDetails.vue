@@ -32,9 +32,32 @@ export default {
             this.code = this.$route.query.code;
             order.GetOne(this.code).then(res => {
                 this.order = res.order;
+                let date = new Date(this.order.createTime);
+                let year = date.getFullYear();
+                year = new String(year);
+                let month = date.getMonth()+1;
+                if(month < 10) {
+                    month = "0".concat(month);
+                }
+                let day = date.getDate();
+                if(day < 10) {
+                    day = "0".concat(day);
+                }
+                let hour = date.getHours();
+                if(hour < 10) {
+                    hour = "0".concat(hour);
+                }
+                let minute = date.getMinutes();
+                if(minute < 10) {
+                    minute = "0".concat(minute);
+                }
+                let second = date.getSeconds();
+                if(second < 10) {
+                    second = "0".concat(second);
+                }
+                let newDate = year.concat("-",month,"-",day," ",hour,":",minute,":",second);
+                this.order.createTime = newDate;
             })
-            let date = new Date(this.order.createTime);
-            console.log(date.getDate);
         },
         back() {
             this.$router.push({ path: "/buyOrder" });
