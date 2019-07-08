@@ -149,7 +149,6 @@ export default {
               order.AddList(data).then(res => {
                 Toast('恭喜您，书籍已下单，请您尽快联系卖家进行交易');
                 this.init();
-                this.totalPrice = 0;
               });
           })
           .catch(() => {

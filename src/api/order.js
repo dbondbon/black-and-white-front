@@ -17,6 +17,13 @@ export default {
             data: params,
         })
     },
+    GetOne(params) {
+        let url = '/order/'.concat(params);
+        return axios({
+            method: 'get',
+            url:url
+        })
+    },
     BuyList(params) {
         let url = '/order/0/'.concat(params);
         return axios({

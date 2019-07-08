@@ -47,7 +47,6 @@ export default {
       this.imgSrc = this.GLOBAL.imgSrc;
       order.BuyList(this.GLOBAL.user.userId).then(res => {
         this.orderMap = res.orderMap;
-        console.log(this.orderMap);
       });
     },
     back() {
