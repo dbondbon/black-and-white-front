@@ -162,7 +162,7 @@ export default {
 
 <style lang="less" scoped>
 .cart {
-  .card {
+    .card {
     width: 300px;
     display: inline-block;
   }
