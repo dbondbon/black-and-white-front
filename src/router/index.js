@@ -24,6 +24,10 @@ const router =  new Router({
   routes: [
     {
       path: '/',
+      redirect: '/login'
+    },
+    {
+      path: '/login',
       name: 'login',
       component: Login
     }, 
@@ -112,16 +116,15 @@ const router =  new Router({
 
 //登录校验
 router.beforeEach((to, from, next) => {
-  if(store.user != null) {
-    next();
-  } else {
-    if(to.name == "login" || to.name == "register") {
+    if(localStorage.token) {   // 获取当前的token是否存在
       next();
-      return;
+    } else {
+      if(to.name == "login" || to.name == "register") {
+        next();
+        return;
+      }
+      next({ path: '/' });
     }
-    next({ path: '/' });
-  }
-  next();
 })
 
 export default router

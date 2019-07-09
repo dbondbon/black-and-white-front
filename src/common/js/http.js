@@ -1,4 +1,5 @@
 import axios from 'axios'
+import VueRouter from 'vue-router';
 
 /**
  * http配置
@@ -37,6 +38,10 @@ instance.interceptors.request.use(
  */
 instance.interceptors.response.use(
     response => {
+        if(response.data.code == 999) {
+            router.replace('/');
+            console.log("token过期");
+        }
         // 返回响应中的数据
         return response.data;
     }
