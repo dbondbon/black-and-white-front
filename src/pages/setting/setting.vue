@@ -51,6 +51,7 @@ export default {
         })
           .then(() => {
               this.GLOBAL.user = null;
+              localStorage.clear();  //清空token
               this.$router.push({ path: "/login" });
           })
           .catch(() => {

@@ -81,6 +81,7 @@ export default {
           this.submitFlag = 0;
         }else {       
           Toast.success('登录成功');
+          window.localStorage["token"] = JSON.stringify(res.token);
           this.GLOBAL.user = res.user;
           setTimeout(() => {
             this.$router.push({path: "/home"});
